@@ -76,4 +76,17 @@ public class AddressBookController {
 
         return addressBookService.viewPersonsByState();
     }
+ // Count Contacts by City
+    @GetMapping("/contacts/count/city")
+    public Map<String, Long> countContactsByCity() {
+
+        return addressBookService.countContactsByCity();
+    }
+    
+    // Count Contacts by State
+    @GetMapping("/contacts/count/state")
+    public Map<String, Long> countContactsByState() {
+
+        return addressBookService.countContactsByState();
+    }
 }

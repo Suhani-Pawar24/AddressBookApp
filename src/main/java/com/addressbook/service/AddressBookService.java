@@ -103,4 +103,21 @@ public class AddressBookService {
     // Additional Maps for City and State to optimize search and view operations
     private Map<String, List<Contact>> cityMap = new HashMap<>();
     private Map<String, List<Contact>> stateMap = new HashMap<>();
+ // Count Contacts by City across all Address Books
+    public Map<String, Long> countContactsByCity() {
+
+        return addressBooks.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .collect(Collectors.groupingBy(Contact::getCity, Collectors.counting()));
+    }
+    
+    // Count Contacts by State across all Address Books
+    public Map<String, Long> countContactsByState() {
+
+        return addressBooks.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .collect(Collectors.groupingBy(Contact::getState, Collectors.counting()));
+    }
 }
