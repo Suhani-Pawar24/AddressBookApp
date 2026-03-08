@@ -48,4 +48,17 @@ public class AddressBookController {
 
         return addressBookService.getContacts(name);
     }
+ // Search Contacts by City
+    @GetMapping("/contacts/city/{city}")
+    public List<Contact> searchByCity(@PathVariable String city) {
+
+        return addressBookService.searchByCity(city);
+    }
+    
+    // Search Contacts by State
+    @GetMapping("/contacts/state/{state}")
+    public List<Contact> searchByState(@PathVariable String state) {
+
+        return addressBookService.searchByState(state);
+    }
 }
