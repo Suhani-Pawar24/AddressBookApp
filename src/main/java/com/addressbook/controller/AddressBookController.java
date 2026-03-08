@@ -89,4 +89,10 @@ public class AddressBookController {
 
         return addressBookService.countContactsByState();
     }
+ // Sort Contacts by Name across all Address Books
+    @GetMapping("/contacts/sort/name")
+    public List<Contact> sortContactsByName() {
+
+        return addressBookService.sortContactsByName();
+    }
 }
