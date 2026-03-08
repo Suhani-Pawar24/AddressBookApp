@@ -44,4 +44,9 @@ public class AddressBookController {
     public String deleteContact(@PathVariable int id) {
         return addressBookService.deleteContact(id);
     }
+    @PostMapping("/bulk")
+    public List<Contact> addMultipleContacts(@RequestBody List<Contact> contacts) {
+
+        return addressBookService.addMultipleContacts(contacts);
+    }
 }

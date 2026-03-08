@@ -73,4 +73,10 @@ public class AddressBookService {
 
         return "Contact not found";
     }
+    public List<Contact> addMultipleContacts(List<Contact> contacts) {
+
+        contactList.addAll(contacts);
+
+        return contactList;
+    }
 }
