@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.addressbook.io.AddressBookFileService;
 import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
@@ -114,5 +115,15 @@ public class AddressBookController {
     public List<Contact> sortContactsByZip() {
 
         return addressBookService.sortContactsByZip();
+    }
+    @GetMapping("/contacts/write")
+    public String writeContactsToFile() {
+
+        List<Contact> contacts = addressBookService.getAllContacts();
+
+        AddressBookFileService fileService = new AddressBookFileService();
+        fileService.writeContactsToFile(contacts);
+
+        return "Contacts written to file";
     }
 }

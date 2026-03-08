@@ -159,4 +159,11 @@ public class AddressBookService {
                 .sorted(Comparator.comparing(Contact::getZip))
                 .toList();
     }
+    public List<Contact> getAllContacts() {
+
+        return addressBooks.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .toList();
+    }
 }
