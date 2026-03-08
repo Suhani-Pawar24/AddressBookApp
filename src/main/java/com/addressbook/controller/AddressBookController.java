@@ -35,8 +35,8 @@ public class AddressBookController {
 
     // Add Contact to Address Book
     @PostMapping("/addressbooks/{name}/contacts")
-    public Contact addContact(@PathVariable String name,
-                              @RequestBody Contact contact) {
+    public String addContact(@PathVariable String name,
+                             @RequestBody Contact contact) {
 
         return addressBookService.addContact(name, contact);
     }

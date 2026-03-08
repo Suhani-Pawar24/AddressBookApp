@@ -33,16 +33,23 @@ public class AddressBookService {
 
 
     // Add Contact to Address Book
-    public Contact addContact(String addressBookName, Contact contact) {
+    public String addContact(String addressBookName, Contact contact) {
 
         AddressBook addressBook = addressBooks.get(addressBookName);
 
-        if (addressBook != null) {
-            addressBook.getContacts().add(contact);
-            return contact;
+        if (addressBook == null) {
+            return "AddressBook not found";
         }
 
-        return null;
+        List<Contact> contacts = addressBook.getContacts();
+
+        if (contacts.contains(contact)) {
+            return "Duplicate contact not allowed";
+        }
+
+        contacts.add(contact);
+
+        return "Contact added successfully";
     }
 
 

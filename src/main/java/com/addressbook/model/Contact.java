@@ -102,5 +102,24 @@ public class Contact
 	    public void setEmail(String email) {
 	        this.email = email;
 	    }
+	    @Override
+	    public boolean equals(Object obj) {
+
+	        if (this == obj)
+	            return true;
+
+	        if (obj == null || getClass() != obj.getClass())
+	            return false;
+
+	        Contact contact = (Contact) obj;
+
+	        return firstName.equalsIgnoreCase(contact.firstName)
+	                && lastName.equalsIgnoreCase(contact.lastName);
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return (firstName + lastName).toLowerCase().hashCode();
+	    }
 }
 	
