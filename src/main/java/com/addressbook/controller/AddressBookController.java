@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.addressbook.io.AddressBookCSVService;
 import com.addressbook.io.AddressBookFileService;
+import com.addressbook.io.AddressBookJsonService;
 import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
@@ -145,5 +146,24 @@ public class AddressBookController {
 
         AddressBookCSVService csvService = new AddressBookCSVService();
         return csvService.readContactsFromCSV();
+    }
+ // Write Contacts to JSON file
+    @GetMapping("/contacts/json/write")
+    public String writeContactsToJSON() {
+
+        List<Contact> contacts = addressBookService.getAllContacts();
+
+        AddressBookJsonService jsonService = new AddressBookJsonService();
+        jsonService.writeContactsToJSON(contacts);
+
+        return "Contacts written to JSON file";
+    }
+    
+    // Read Contacts from JSON file
+    @GetMapping("/contacts/json/read")
+    public List<Contact> readContactsFromJSON() {
+
+        AddressBookJsonService jsonService = new AddressBookJsonService();
+        return jsonService.readContactsFromJSON();
     }
 }
