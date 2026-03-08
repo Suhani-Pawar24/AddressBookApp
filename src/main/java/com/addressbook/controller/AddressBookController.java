@@ -95,4 +95,24 @@ public class AddressBookController {
 
         return addressBookService.sortContactsByName();
     }
+ // Sort Contacts by City across all Address Books
+    @GetMapping("/contacts/sort/city")
+    public List<Contact> sortContactsByCity() {
+
+        return addressBookService.sortContactsByCity();
+    }
+    
+    // Sort Contacts by State across all Address Books
+    @GetMapping("/contacts/sort/state")
+    public List<Contact> sortContactsByState() {
+
+        return addressBookService.sortContactsByState();
+    }
+    
+    // Sort Contacts by Zip across all Address Books
+    @GetMapping("/contacts/sort/zip")
+    public List<Contact> sortContactsByZip() {
+
+        return addressBookService.sortContactsByZip();
+    }
 }

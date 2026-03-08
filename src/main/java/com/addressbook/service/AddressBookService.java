@@ -130,4 +130,33 @@ public class AddressBookService {
                 .sorted(Comparator.comparing(Contact::getFirstName))
                 .toList();
     }
+ // Sort Contacts by City across all Address Books
+    public List<Contact> sortContactsByCity() {
+
+        return addressBooks.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .sorted(Comparator.comparing(Contact::getCity))
+                .toList();
+    }
+    
+    // Sort Contacts by State across all Address Books
+    public List<Contact> sortContactsByState() {
+
+        return addressBooks.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .sorted(Comparator.comparing(Contact::getState))
+                .toList();
+    }
+    
+    // Sort Contacts by Zip across all Address Books
+    public List<Contact> sortContactsByZip() {
+
+        return addressBooks.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .sorted(Comparator.comparing(Contact::getZip))
+                .toList();
+    }
 }
