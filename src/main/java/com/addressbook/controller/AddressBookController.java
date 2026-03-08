@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.addressbook.io.AddressBookCSVService;
 import com.addressbook.io.AddressBookFileService;
 import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
@@ -125,5 +126,24 @@ public class AddressBookController {
         fileService.writeContactsToFile(contacts);
 
         return "Contacts written to file";
+    }
+ // Write Contacts to CSV file
+    @GetMapping("/contacts/csv/write")
+    public String writeContactsToCSV() {
+
+        List<Contact> contacts = addressBookService.getAllContacts();
+
+        AddressBookCSVService csvService = new AddressBookCSVService();
+        csvService.writeContactsToCSV(contacts);
+
+        return "Contacts written to CSV file";
+    }
+    
+    // Read Contacts from CSV file
+    @GetMapping("/contacts/csv/read")
+    public List<Contact> readContactsFromCSV() {
+
+        AddressBookCSVService csvService = new AddressBookCSVService();
+        return csvService.readContactsFromCSV();
     }
 }
