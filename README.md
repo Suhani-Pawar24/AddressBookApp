@@ -14,4 +14,3 @@ Main features:
 - UC3 **reuses UC2 code**  
 - Supports editing **in-memory contacts** only  
 - Future UCs will add **delete, search, display, and persistence**
-- 
