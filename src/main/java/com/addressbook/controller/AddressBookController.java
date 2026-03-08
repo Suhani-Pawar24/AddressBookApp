@@ -48,7 +48,8 @@ public class AddressBookController {
 
         return addressBookService.getContacts(name);
     }
- // Search Contacts by City
+    
+    // Search Contacts by City
     @GetMapping("/contacts/city/{city}")
     public List<Contact> searchByCity(@PathVariable String city) {
 
@@ -60,5 +61,19 @@ public class AddressBookController {
     public List<Contact> searchByState(@PathVariable String state) {
 
         return addressBookService.searchByState(state);
+    }
+    
+    // View Persons by City
+    @GetMapping("/contacts/view/city")
+    public Map<String, List<Contact>> viewPersonsByCity() {
+
+        return addressBookService.viewPersonsByCity();
+    }
+    
+    // View Persons by State
+    @GetMapping("/contacts/view/state")
+    public Map<String, List<Contact>> viewPersonsByState() {
+
+        return addressBookService.viewPersonsByState();
     }
 }
