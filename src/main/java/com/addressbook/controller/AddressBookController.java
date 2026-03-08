@@ -1,52 +1,51 @@
 package com.addressbook.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
 
 @RestController
-@RequestMapping("/contacts")
 public class AddressBookController {
 
     @Autowired
     private AddressBookService addressBookService;
 
-    // Add Contact
-    @PostMapping
-    public Contact addContact(@RequestBody Contact contact) {
-        return addressBookService.addContact(contact);
+
+    // Create Address Book
+    @PostMapping("/addressbooks")
+    public AddressBook createAddressBook(@RequestParam String name) {
+
+        return addressBookService.createAddressBook(name);
     }
 
-    // Get All Contacts
-    @GetMapping
-    public List<Contact> getAllContacts() {
-        return addressBookService.getAllContacts();
+
+    // Get All Address Books
+    @GetMapping("/addressbooks")
+    public Map<String, AddressBook> getAllAddressBooks() {
+
+        return addressBookService.getAllAddressBooks();
     }
 
-    // Get Contact By ID
-    @GetMapping("/{id}")
-    public Contact getContactById(@PathVariable int id) {
-        return addressBookService.getContactById(id);
+
+    // Add Contact to Address Book
+    @PostMapping("/addressbooks/{name}/contacts")
+    public Contact addContact(@PathVariable String name,
+                              @RequestBody Contact contact) {
+
+        return addressBookService.addContact(name, contact);
     }
 
-    // Update Contact
-    @PutMapping("/{id}")
-    public Contact updateContact(@PathVariable int id,
-                                 @RequestBody Contact contact) {
 
-        return addressBookService.updateContact(id, contact);
-    }
-    @DeleteMapping("/{id}")
-    public String deleteContact(@PathVariable int id) {
-        return addressBookService.deleteContact(id);
-    }
-    @PostMapping("/bulk")
-    public List<Contact> addMultipleContacts(@RequestBody List<Contact> contacts) {
+    // Get Contacts from Address Book
+    @GetMapping("/addressbooks/{name}/contacts")
+    public List<Contact> getContacts(@PathVariable String name) {
 
-        return addressBookService.addMultipleContacts(contacts);
+        return addressBookService.getContacts(name);
     }
 }

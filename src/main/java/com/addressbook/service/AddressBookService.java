@@ -1,82 +1,60 @@
 package com.addressbook.service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 
 @Service
 public class AddressBookService {
 
-    private List<Contact> contactList = new ArrayList<>();
+    private Map<String, AddressBook> addressBooks = new HashMap<>();
 
-    // Add Contact
-    public Contact addContact(Contact contact) {
-        contactList.add(contact);
-        return contact;
+
+    // Create Address Book
+    public AddressBook createAddressBook(String name) {
+
+        AddressBook addressBook = new AddressBook(name);
+        addressBooks.put(name, addressBook);
+
+        return addressBook;
     }
 
-    // Get All Contacts
-    public List<Contact> getAllContacts() {
-        return contactList;
+
+    // Get All Address Books
+    public Map<String, AddressBook> getAllAddressBooks() {
+
+        return addressBooks;
     }
 
-    // Get Contact By ID
-    public Contact getContactById(int id) {
-        for (Contact contact : contactList) {
-            if (contact.getId() == id) {
-                return contact;
-            }
-        }
-        return null;
-    }
 
-    // Update Contact
-    public Contact updateContact(int id, Contact updatedContact) {
+    // Add Contact to Address Book
+    public Contact addContact(String addressBookName, Contact contact) {
 
-        for (Contact contact : contactList) {
+        AddressBook addressBook = addressBooks.get(addressBookName);
 
-            if (contact.getId() == id) {
-
-                contact.setFirstName(updatedContact.getFirstName());
-                contact.setLastName(updatedContact.getLastName());
-                contact.setAddress(updatedContact.getAddress());
-                contact.setCity(updatedContact.getCity());
-                contact.setState(updatedContact.getState());
-                contact.setZip(updatedContact.getZip());
-                contact.setPhoneNumber(updatedContact.getPhoneNumber());
-                contact.setEmail(updatedContact.getEmail());
-
-                return contact;
-            }
+        if (addressBook != null) {
+            addressBook.getContacts().add(contact);
+            return contact;
         }
 
         return null;
     }
-    public String deleteContact(int id) {
 
-        Contact contactToDelete = null;
 
-        for (Contact contact : contactList) {
-            if (contact.getId() == id) {
-                contactToDelete = contact;
-                break;
-            }
+    // Get Contacts from Address Book
+    public List<Contact> getContacts(String addressBookName) {
+
+        AddressBook addressBook = addressBooks.get(addressBookName);
+
+        if (addressBook != null) {
+            return addressBook.getContacts();
         }
 
-        if (contactToDelete != null) {
-            contactList.remove(contactToDelete);
-            return "Contact deleted successfully";
-        }
-
-        return "Contact not found";
-    }
-    public List<Contact> addMultipleContacts(List<Contact> contacts) {
-
-        contactList.addAll(contacts);
-
-        return contactList;
+        return null;
     }
 }
