@@ -97,4 +97,48 @@ public class AddressBookDBService {
 
         return "Update failed";
     }
+    public List<Contact> getContactsByDateRange(String startDate, String endDate) {
+
+        List<Contact> contacts = new ArrayList<>();
+
+        String query = "SELECT * FROM contacts WHERE date_added BETWEEN ? AND ?";
+
+        try {
+
+            Connection connection =
+                    DriverManager.getConnection(URL, USER, PASSWORD);
+
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, startDate);
+            statement.setString(2, endDate);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+
+                Contact contact = new Contact(
+                        rs.getInt("id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("zip"),
+                        rs.getString("phone"),
+                        rs.getString("email")
+                );
+
+                contacts.add(contact);
+            }
+
+            connection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return contacts;
+    }
+
 }

@@ -191,4 +191,14 @@ public class AddressBookController {
 
         return dbService.updateContact(contact);
     }
+    @GetMapping("/contacts/db/date-range")
+    public List<Contact> getContactsByDateRange(
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+
+        AddressBookDBService dbService = new AddressBookDBService();
+
+        return dbService.getContactsByDateRange(startDate, endDate);
+    }
+
 }
