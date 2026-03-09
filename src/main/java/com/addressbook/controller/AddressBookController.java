@@ -220,4 +220,12 @@ public class AddressBookController {
 
         return dbService.countContactsByState();
     }
+    @PostMapping("/contacts/db/add")
+    public String addContactToDB(@RequestBody Contact contact) {
+
+        AddressBookDBService dbService = new AddressBookDBService();
+
+        return dbService.addContact(contact);
+    }
+
 }

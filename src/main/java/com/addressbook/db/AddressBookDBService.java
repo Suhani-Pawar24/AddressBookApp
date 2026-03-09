@@ -206,5 +206,39 @@ public class AddressBookDBService {
 
         return stateCount;
     }
+    public String addContact(Contact contact) {
+
+        String query = "INSERT INTO contacts(first_name,last_name,address,city,state,zip,phone,email,date_added) VALUES(?,?,?,?,?,?,?,?,CURDATE())";
+
+        try {
+
+            Connection connection =
+                    DriverManager.getConnection(URL, USER, PASSWORD);
+
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, contact.getFirstName());
+            statement.setString(2, contact.getLastName());
+            statement.setString(3, contact.getAddress());
+            statement.setString(4, contact.getCity());
+            statement.setString(5, contact.getState());
+            statement.setString(6, contact.getZip());
+            statement.setString(7, contact.getPhoneNumber());
+            statement.setString(8, contact.getEmail());
+
+            int rowsInserted = statement.executeUpdate();
+
+            connection.close();
+
+            if (rowsInserted > 0) {
+                return "Contact added successfully";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Insert failed";
+    }
 
 }
