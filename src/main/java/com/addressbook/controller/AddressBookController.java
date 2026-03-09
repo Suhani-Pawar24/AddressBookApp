@@ -80,7 +80,8 @@ public class AddressBookController {
 
         return addressBookService.viewPersonsByState();
     }
- // Count Contacts by City
+    
+    // Count Contacts by City
     @GetMapping("/contacts/count/city")
     public Map<String, Long> countContactsByCity() {
 
@@ -93,13 +94,15 @@ public class AddressBookController {
 
         return addressBookService.countContactsByState();
     }
- // Sort Contacts by Name across all Address Books
+    
+    // Sort Contacts by Name across all Address Books
     @GetMapping("/contacts/sort/name")
     public List<Contact> sortContactsByName() {
 
         return addressBookService.sortContactsByName();
     }
- // Sort Contacts by City across all Address Books
+    
+    // Sort Contacts by City across all Address Books
     @GetMapping("/contacts/sort/city")
     public List<Contact> sortContactsByCity() {
 
@@ -119,6 +122,7 @@ public class AddressBookController {
 
         return addressBookService.sortContactsByZip();
     }
+    
     @GetMapping("/contacts/write")
     public String writeContactsToFile() {
 
@@ -129,7 +133,8 @@ public class AddressBookController {
 
         return "Contacts written to file";
     }
- // Write Contacts to CSV file
+    
+    // Write Contacts to CSV file
     @GetMapping("/contacts/csv/write")
     public String writeContactsToCSV() {
 
@@ -148,13 +153,14 @@ public class AddressBookController {
         AddressBookCSVService csvService = new AddressBookCSVService();
         return csvService.readContactsFromCSV();
     }
- // Write Contacts to JSON file
+    
+    // Write Contacts to JSON file
     @GetMapping("/contacts/json/write")
     public String writeContactsToJSON() {
 
         List<Contact> contacts = addressBookService.getAllContacts();
 
-        AddressBookJsonService jsonService = new AddressBookJsonService();
+        AddressBookJsonService jsonService = new  AddressBookJsonService();
         jsonService.writeContactsToJSON(contacts);
 
         return "Contacts written to JSON file";
@@ -164,14 +170,25 @@ public class AddressBookController {
     @GetMapping("/contacts/json/read")
     public List<Contact> readContactsFromJSON() {
 
-        AddressBookJsonService jsonService = new AddressBookJsonService();
+        AddressBookJsonService jsonService = new  AddressBookJsonService();
         return jsonService.readContactsFromJSON();
     }
+    
+    // Get Contacts from Database
     @GetMapping("/contacts/db")
     public List<Contact> getContactsFromDB() {
 
         AddressBookDBService dbService = new AddressBookDBService();
 
         return dbService.getContactsFromDB();
+    }
+    
+    // Add Contact to Database
+    @PutMapping("/contacts/db/update")
+    public String updateContactInDB(@RequestBody Contact contact) {
+
+        AddressBookDBService dbService = new AddressBookDBService();
+
+        return dbService.updateContact(contact);
     }
 }

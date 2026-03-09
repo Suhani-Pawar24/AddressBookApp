@@ -1,5 +1,6 @@
 package com.addressbook.service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -51,10 +52,12 @@ public class AddressBookService {
 
         contacts.add(contact);
 
+        cityMap.computeIfAbsent(contact.getCity(), k -> new ArrayList<>()).add(contact);
+        stateMap.computeIfAbsent(contact.getState(), k -> new ArrayList<>()).add(contact);
+
         return "Contact added successfully";
     }
-
-
+    
     // Get Contacts from Address Book
     public List<Contact> getContacts(String addressBookName) {
 
@@ -66,6 +69,7 @@ public class AddressBookService {
 
         return null;
     }
+    
     // Search Contacts by City across all Address Books
     public List<Contact> searchByCity(String city) {
 
@@ -83,7 +87,8 @@ public class AddressBookService {
                 .filter(contact -> contact.getState().equalsIgnoreCase(state))
                 .toList();
     }
- // View Persons by City across all Address Books
+    
+    // View Persons by City across all Address Books
     public Map<String, List<Contact>> viewPersonsByCity() {
 
         return addressBooks.values()
@@ -104,7 +109,8 @@ public class AddressBookService {
     // Additional Maps for City and State to optimize search and view operations
     private Map<String, List<Contact>> cityMap = new HashMap<>();
     private Map<String, List<Contact>> stateMap = new HashMap<>();
- // Count Contacts by City across all Address Books
+    
+    // Count Contacts by City across all Address Books
     public Map<String, Long> countContactsByCity() {
 
         return addressBooks.values()
@@ -121,7 +127,8 @@ public class AddressBookService {
                 .flatMap(addressBook -> addressBook.getContacts().stream())
                 .collect(Collectors.groupingBy(Contact::getState, Collectors.counting()));
     }
- // Sort Contacts by Name across all Address Books
+    
+    // Sort Contacts by Name across all Address Books
     public List<Contact> sortContactsByName() {
 
         return addressBooks.values()
@@ -130,7 +137,8 @@ public class AddressBookService {
                 .sorted(Comparator.comparing(Contact::getFirstName))
                 .toList();
     }
- // Sort Contacts by City across all Address Books
+    
+    // Sort Contacts by City across all Address Books
     public List<Contact> sortContactsByCity() {
 
         return addressBooks.values()
@@ -159,6 +167,8 @@ public class AddressBookService {
                 .sorted(Comparator.comparing(Contact::getZip))
                 .toList();
     }
+    
+    // Get All Contacts across all Address Books
     public List<Contact> getAllContacts() {
 
         return addressBooks.values()
