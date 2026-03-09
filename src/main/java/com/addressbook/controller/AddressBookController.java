@@ -160,7 +160,7 @@ public class AddressBookController {
 
         List<Contact> contacts = addressBookService.getAllContacts();
 
-        AddressBookJsonService jsonService = new  AddressBookJsonService();
+        AddressBookJsonService jsonService = new AddressBookJsonService();
         jsonService.writeContactsToJSON(contacts);
 
         return "Contacts written to JSON file";
@@ -170,7 +170,7 @@ public class AddressBookController {
     @GetMapping("/contacts/json/read")
     public List<Contact> readContactsFromJSON() {
 
-        AddressBookJsonService jsonService = new  AddressBookJsonService();
+    	AddressBookJsonService jsonService = new AddressBookJsonService();
         return jsonService.readContactsFromJSON();
     }
     
@@ -191,6 +191,8 @@ public class AddressBookController {
 
         return dbService.updateContact(contact);
     }
+    
+    // Get Contacts added in a specific date range from Database
     @GetMapping("/contacts/db/date-range")
     public List<Contact> getContactsByDateRange(
             @RequestParam String startDate,
@@ -200,5 +202,22 @@ public class AddressBookController {
 
         return dbService.getContactsByDateRange(startDate, endDate);
     }
+    
+    // Count Contacts by City from Database
+    @GetMapping("/contacts/db/count/city")
+    public Map<String, Integer> countContactsByCity1() {
 
+        AddressBookDBService dbService = new AddressBookDBService();
+
+        return dbService.countContactsByCity();
+    }
+    
+    // Count Contacts by State from Database
+    @GetMapping("/contacts/db/count/state")
+    public Map<String, Integer> countContactsByState1() {
+
+        AddressBookDBService dbService = new AddressBookDBService();
+
+        return dbService.countContactsByState();
+    }
 }
