@@ -1,9 +1,10 @@
 package com.addressbook.service;
 import com.addressbook.model.Contact;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
-
+@Service
 public class JSONServerService {
 
 	    private static final String JSON_SERVER_URL =
@@ -29,6 +30,16 @@ public class JSONServerService {
 	        });
 
 	        return "Contacts added to JSON Server successfully";
+	    }
+	    public Contact updateContact(int id, Contact contact) {
+
+	        String url = "http://localhost:3000/contacts/" + id;
+
+	        RestTemplate restTemplate = new RestTemplate();
+
+	        restTemplate.put(url, contact);
+
+	        return contact;
 	    }
 
 }

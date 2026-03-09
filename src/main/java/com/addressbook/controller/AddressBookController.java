@@ -20,7 +20,8 @@ public class AddressBookController {
 
     @Autowired
     private AddressBookService addressBookService;
-
+    @Autowired
+    private JSONServerService jsonServerService;
 
     // Create Address Book
     @PostMapping("/addressbooks")
@@ -250,6 +251,11 @@ public class AddressBookController {
         JSONServerService jsonService = new JSONServerService();
 
         return jsonService.addMultipleContactsToJSONServer(contacts);
+    }
+    @PutMapping("/contacts/{id}")
+    public Contact updateContact(@PathVariable int id, @RequestBody Contact contact) {
+
+        return jsonServerService.updateContact(id, contact);
     }
 
 
