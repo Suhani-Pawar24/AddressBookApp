@@ -13,6 +13,7 @@ import com.addressbook.io.AddressBookJsonService;
 import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
+import com.addressbook.service.JSONServerService;
 
 @RestController
 public class AddressBookController {
@@ -236,6 +237,14 @@ public class AddressBookController {
 
         return "Multiple contacts are being added using threads";
     }
+    @GetMapping("/contacts/jsonserver")
+    public List<Contact> getContactsFromJSONServer() {
+
+        JSONServerService jsonService = new JSONServerService();
+
+        return jsonService.getContactsFromJSONServer();
+    }
+
 
 
 
