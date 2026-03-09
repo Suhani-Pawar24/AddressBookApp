@@ -244,6 +244,14 @@ public class AddressBookController {
 
         return jsonService.getContactsFromJSONServer();
     }
+    @PostMapping("/contacts/jsonserver/add-multiple")
+    public String addContactsToJSONServer(@RequestBody List<Contact> contacts) {
+
+        JSONServerService jsonService = new JSONServerService();
+
+        return jsonService.addMultipleContactsToJSONServer(contacts);
+    }
+
 
 
 
