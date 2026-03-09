@@ -208,25 +208,24 @@ public class AddressBookDBService {
     }
     public String addContact(Contact contact) {
 
-        String query = "INSERT INTO contacts(first_name,last_name,address,city,state,zip,phone,email,date_added) VALUES(?,?,?,?,?,?,?,?,CURDATE())";
+        String query = "INSERT INTO contacts (first_name,last_name,address,city,state,zip,phone,email,date_added) VALUES ('"
+                + contact.getFirstName() + "','"
+                + contact.getLastName() + "','"
+                + contact.getAddress() + "','"
+                + contact.getCity() + "','"
+                + contact.getState() + "','"
+                + contact.getZip() + "','"
+                + contact.getPhoneNumber() + "','"
+                + contact.getEmail() + "', CURDATE())";
 
         try {
 
             Connection connection =
                     DriverManager.getConnection(URL, USER, PASSWORD);
 
-            PreparedStatement statement = connection.prepareStatement(query);
+            Statement statement = connection.createStatement();
 
-            statement.setString(1, contact.getFirstName());
-            statement.setString(2, contact.getLastName());
-            statement.setString(3, contact.getAddress());
-            statement.setString(4, contact.getCity());
-            statement.setString(5, contact.getState());
-            statement.setString(6, contact.getZip());
-            statement.setString(7, contact.getPhoneNumber());
-            statement.setString(8, contact.getEmail());
-
-            int rowsInserted = statement.executeUpdate();
+            int rowsInserted = statement.executeUpdate(query);
 
             connection.close();
 
@@ -239,6 +238,18 @@ public class AddressBookDBService {
         }
 
         return "Insert failed";
+    }
+    public void addMultipleContacts(List<Contact> contacts) {
+
+        contacts.forEach(contact -> {
+
+            new Thread(() -> {
+                addContact(contact);
+                System.out.println("Contact added by thread: " + Thread.currentThread().getName());
+            }).start();
+
+        });
+
     }
 
 }
