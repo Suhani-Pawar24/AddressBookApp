@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.addressbook.db.AddressBookDBService;
 import com.addressbook.io.AddressBookCSVService;
 import com.addressbook.io.AddressBookFileService;
 import com.addressbook.io.AddressBookJsonService;
@@ -165,5 +166,12 @@ public class AddressBookController {
 
         AddressBookJsonService jsonService = new AddressBookJsonService();
         return jsonService.readContactsFromJSON();
+    }
+    @GetMapping("/contacts/db")
+    public List<Contact> getContactsFromDB() {
+
+        AddressBookDBService dbService = new AddressBookDBService();
+
+        return dbService.getContactsFromDB();
     }
 }
