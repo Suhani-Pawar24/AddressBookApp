@@ -41,5 +41,16 @@ public class JSONServerService {
 
 	        return contact;
 	    }
+	    public String deleteContactFromJSONServer(int id) {
+
+	        RestTemplate restTemplate = new RestTemplate();
+
+	        String url = "http://localhost:3000/contacts/" + id;
+
+	        restTemplate.delete(url);
+
+	        return "Contact deleted successfully from JSON Server";
+	    }
+
 
 }
